@@ -3,9 +3,12 @@ const app = express();
 const port = 3001;
 const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
-const Mydata = require("./models/mydataSchema");
+
 app.set("view engine", "ejs");
 app.use(express.static('public'))
+
+// import schema  models
+const Myproduct=require("./models/productSchema")
 
 
 // Auto refresh
@@ -16,6 +19,7 @@ liveReloadServer.watch(path.join(__dirname, 'public'));
  
  
 const connectLivereload = require("connect-livereload");
+const { type } = require("os");
 app.use(connectLivereload());
  
 liveReloadServer.server.once("connection", () => {
@@ -26,28 +30,7 @@ liveReloadServer.server.once("connection", () => {
 
 
 
-
-
-
-
-app.get("/", (req, res) => {
-// result ==> array of objects
-res.render("index", {   });
-
-});
-
-app.get("/user/add.html", (req, res) => {
-  res.render("user/add")
-});
-
-app.get("/user/view.html", (req, res) => {
-  res.render("user/view")
-});
-
-app.get("/user/edit.html", (req, res) => {
-  res.render("user/edit")
-});
-
+// conect to the database \
 mongoose
   .connect(
     "mongodb+srv://zghariservices_db_user:BaP9kwgdGHafiMYh@cluster0.vuexhvx.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0"
@@ -62,3 +45,54 @@ mongoose
   });
 
 
+
+
+
+app.get("/", (req, res) => {
+// result ==> array of objects
+Myproduct.find().then((result) => { 
+  res.render("index", { productsArr:result  });
+ }).catch((error) => { 
+  console.log(error)
+  })
+
+
+
+
+
+});
+
+app.get("/product/add.html", (req, res) => {
+  res.render("product/add")
+});
+
+app.get("/product/view.html", (req, res) => {
+  res.render("product/view")
+});
+
+app.get("/product/edit.html", (req, res) => {
+  res.render("product/edit")
+});
+
+
+
+
+
+
+ //  save the product details and in database ================
+  app.post("/save-product",(req,res) => { 
+
+     console.log(req.body)
+     const  product = new Myproduct(req.body)
+
+    //  save the product details and in database 
+    product.save().then((result) => { 
+      console.log("data saved succesfully!!")
+      res.redirect("/")
+      }).catch((err) => { 
+        console.log(err)
+       })
+
+     
+
+   })
