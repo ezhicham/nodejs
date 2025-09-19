@@ -3,9 +3,13 @@ const app = express();
 const port = 3001;
 const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
-
+const methodOverride = require('method-override')
 app.set("view engine", "ejs");
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
+
+
+
 
 // import schema  models
 const Myproduct=require("./models/productSchema")
@@ -66,12 +70,34 @@ app.get("/product/add.html", (req, res) => {
   res.render("product/add")
 });
 
-app.get("/product/view.html", (req, res) => {
-  res.render("product/view")
+
+// get targeted product from database and send it  to the view page===========
+app.get(`/view/:id`, (req, res) => {
+
+  Myproduct.findById(req.params.id).then((result) => { 
+
+    console.log(result)
+    res.render("product/view",{targetproduct:result})
+   }).catch((erro) => { 
+    console.log(erro)
+    })
+ 
+
 });
 
-app.get("/product/edit.html", (req, res) => {
-  res.render("product/edit")
+
+
+// get the data that i want to edit on it 
+app.get("/edit/:id", (req, res) => {
+
+
+   Myproduct.findById(req.params.id).then((result) => { 
+         res.render("product/edit",{editProduct:result})
+    }).catch((err) => { 
+      console.log(error)
+     })
+
+  
 });
 
 
@@ -94,5 +120,23 @@ app.get("/product/edit.html", (req, res) => {
        })
 
      
+
+   })
+
+
+  //  delete the product=======
+
+  app.delete("/delete/:id",(req,res) => { 
+
+    console.log(req.params.id)
+    console.log("=============================")
+
+    Myproduct.findByIdAndDelete(req.params.id).then((result) => { 
+      console.log("products deleted successfully")
+      res.redirect("/")
+     }).catch((error) => { 
+      console.log("data no deleted ")
+      })
+
 
    })

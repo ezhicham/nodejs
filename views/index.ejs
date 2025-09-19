@@ -121,76 +121,95 @@
 
             <%- include("./components/navbar.ejs")   %> 
 
-        <table
-          style="width: 99%"
-          class="text-center mx-auto table mt-5 table-striped table-bordered"
-        >
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">type</th>
-              <th scope="col">period</th>
-              <th scope="col">email</th>
-              <th scope="col">password</th>
-              <th scope="col">status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% productsArr.forEach((product, index) => { %>
+
+
+
+            <!---============ display no data if the product not available  ============= -->
+
+            <% if (productsArr.length<=0) { %>
+                  <h4 style="text-align: center; color: rgb(235, 51, 97); text-transform: capitalize; margin-top: 10px;">no data available</h4>
+            <% } %>
+
+
+
+            <!--====== display the  table if the products available======== -->
+          <% if (productsArr.length>0) { %>
+            <table
+            style="width: 99%"
+            class="text-center mx-auto table mt-5 table-striped table-bordered"
+          >
+            <thead>
               <tr>
-                <th scope="row"><%= index + 1 %></th>
-                <td><%= product.producttype %></td>
-                <td><%= product.period %></td>
-                <td><%= product.email %></td>
-                <td><%= product.password %></td>
-                <td style="color:<%= product.status=='working'?'#60f580':'#ee4972' %> "><%= product.status %></td>
-                <td>
-                  <a
-                    data-bs-toggle="tooltip"
-                    data-bs-title="View details"
-                    data-bs-placement="top"
-                    class=" text-warning"
-                    href="./product/view.html"
-                  >
-                    <i class="bi bi-eye"></i>
-                  </a>
-            
-                  <a
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Edit user"
-                    data-bs-placement="top"
-                    class="text-success"
-                    href="./product/edit.html"
-                  >
-                    <i class="bi bi-pencil"></i>
-                  </a>
-            
-                  <button
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Delete user"
-                    data-bs-placement="top"
-                    class="text-danger"
-                  >
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </td>
+                <th scope="col">#</th>
+                <th scope="col">type</th>
+                <th scope="col">period</th>
+                <th scope="col">email</th>
+                <th scope="col">password</th>
+                <th scope="col">status</th>
+                <th scope="col">Action</th>
               </tr>
-            <% }) %>
-            
-           
-      
+            </thead>
+            <tbody>
+              <% productsArr.forEach((product, index) => { %>
+                <tr>
+                  <th scope="row"><%= index + 1 %></th>
+                  <td><%= product.producttype %></td>
+                  <td><%= product.period %></td>
+                  <td><%= product.email %></td>
+                  <td><%= product.password %></td>
+                  <td style="color:<%= product.status=='working'?'#60f580':'#ee4972' %> "><%= product.status %></td>
+                  <td>
+                    <a
+                      data-bs-toggle="tooltip"
+                      data-bs-title="View details"
+                      data-bs-placement="top"
+                      class=" text-warning"
+                      href="./view/<%= product._id %> "
+                    >
+                      <i class="bi bi-eye"></i>
+                    </a>
+              
+                    <a
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Edit user"
+                      data-bs-placement="top"
+                      class="text-success"
+                      href="/edit/<%= product._id %> "
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <form  action="/delete/<%= product._id %>?_method=DELETE" method="POST">
+                    <button
+                     type="submit"
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Delete user"
+                      data-bs-placement="top"
+                      class="text-danger"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+  
+                  </form>
+                  </td>
+                </tr>
+              <% }) %>
+              
+             
+        
+       
+        
+        
+  
+        
+  
+  
+        
+        
+            </tbody>
+          </table>
+          <% } %>
+
      
-      
-      
-
-      
-
-
-      
-      
-          </tbody>
-        </table>
       </section>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>

@@ -128,7 +128,7 @@
           </ol>
 
           <p class=" ">
-            <span class="fw-medium fs-6">Id :</span> 6487021520bcf1af6319484c
+            <span class="fw-medium fs-6">Id :</span> <%= targetproduct._id %> 
           </p>
         </nav>
 
@@ -139,42 +139,36 @@
           <thead>
             <tr>
               <th scope="col">type</th>
-              <th class="fw-normal" scope="col">capcut</th>
+              <th class="fw-normal" scope="col"><%= targetproduct.producttype %> </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">period</th>
-              <td>12months</td>
+              <td><%= targetproduct.period%> </td>
             </tr>
 
            
 
             <tr>
               <th scope="row">Email</th>
-              <td>ana@gmail.com</td>
+              <td><%= targetproduct.email %> </td>
             </tr>
 
 
             <tr>
               <th scope="row">password</th>
-              <td>23212</td>
+              <td><%= targetproduct.password %> </td>
             </tr>
 
             <tr>
               <th scope="row">status</th>
-              <td style="color: rgb(95, 235, 149);">working</td>
+              <td style="color: <%= targetproduct.status == 'working' ? '#60f580' : '#ee4972' %>"><%= targetproduct.status %></td>
             </tr>
 
-            <tr>
-              <th scope="row">Created on</th>
-              <td>Test6</td>
-            </tr>
+          
 
-            <tr>
-              <th scope="row">Last Update</th>
-              <td>Test7</td>
-            </tr>
+          
           </tbody>
         </table>
       </section>

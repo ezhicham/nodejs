@@ -139,6 +139,7 @@
               type="text"
               class="form-control"
               id="inputfirstName4"
+              value="<%= editProduct.producttype %> "
             />
           </div>
           <div class="col-md-6">
@@ -148,6 +149,7 @@
               type="text"
               class="form-control"
               id="inputlastName4"
+              value="<%= editProduct.period %> "
             />
           </div>
 
@@ -158,6 +160,7 @@
               type="email"
               class="form-control"
               id="inputemail4"
+              value="<%= editProduct.email %> "
             />
           </div>
           <div class="col-md-6">
@@ -167,6 +170,7 @@
               type="number"
               class="form-control"
               id="inputtele4"
+              value="<%= editProduct.password %> "
             />
           </div>
 
@@ -177,12 +181,15 @@
           <div>
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">status:</label>
-              <select id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
+              <select   id="inputCountry" class="form-select">
+                
+          <% var statusList=["expired","working","wrong password"] %> 
 
-                <option>working</option>
-                <option> expired</option>
-                <option>wrong password</option>
+          <% statusList.forEach(status => { %>
+            <option <%= status===editProduct.status? "selected"  : null %> ><%= status %> </option>
+          <% }) %>
+             
+                
               </select>
             </div>
           </div>
@@ -195,6 +202,8 @@
             <button type="submit" class="btn btn-primary">
               Update changes
             </button>
+
+            
             <button
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
@@ -203,6 +212,7 @@
             >
               Delete Customer
             </button>
+         
           </div>
         </form>
       </section>
@@ -237,9 +247,12 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-danger">
-                Delete
+
+            <form  action="/delete/<%= editProduct._id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger">
+                 Yes Delete i'm sure
               </button>
+            </form>
             </div>
           </div>
         </div>
