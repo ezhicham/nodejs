@@ -12,6 +12,8 @@ app.use(express.json())
 var cookieParser = require('cookie-parser')
 app.use(cookieParser()) 
 
+//  dotenv for .env file support
+require('dotenv').config()
 
 // import all routes  module
 const allroutes=require("./routes/allroutes")
@@ -43,7 +45,7 @@ liveReloadServer.server.once("connection", () => {
 // conect to the database \
 mongoose
   .connect(
-    "mongodb+srv://zghariservices_db_user:BaP9kwgdGHafiMYh@cluster0.vuexhvx.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0"
+    process.env.MONGO_URL
   )
   .then(() => {
     app.listen(port, () => {
