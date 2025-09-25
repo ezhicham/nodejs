@@ -5,7 +5,7 @@ const Myproduct = require("../models/productSchema");
 const product_index_get=(req, res) => {
     Myproduct.find()
       .then((result) => {
-        res.render("index", { productsArr: result });
+        res.render("product/home", { productsArr: result });
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +45,7 @@ const product_index_get=(req, res) => {
     Myproduct.findByIdAndDelete(req.params.id)
       .then((result) => {
         console.log("products deleted successfully");
-        res.redirect("/");
+        res.redirect("product/index");
       })
       .catch((error) => {
         console.log("data no deleted ");
@@ -57,7 +57,7 @@ const product_index_get=(req, res) => {
  const update_product= (req, res) => {
     Myproduct.findByIdAndUpdate(req.params.id, req.body)
       .then((result) => {
-        res.redirect("/");
+        res.redirect("product/index");
       })
       .catch((error) => {
         console.log(error);
@@ -106,7 +106,7 @@ const product_index_get=(req, res) => {
       .save()
       .then((result) => {
         console.log("data saved succesfully!!");
-        res.redirect("/");
+        res.redirect("product/index");
       })
       .catch((err) => {
         console.log(err);

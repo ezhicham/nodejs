@@ -7,7 +7,12 @@ const methodOverride = require('method-override')
 app.set("view engine", "ejs");
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
-  
+app.use(express.json())
+// cookies parser package to get the cookies from the client side ===========
+var cookieParser = require('cookie-parser')
+app.use(cookieParser()) 
+
+
 // import all routes  module
 const allroutes=require("./routes/allroutes")
 
@@ -29,7 +34,7 @@ app.use(connectLivereload());
  
 liveReloadServer.server.once("connection", () => {
   setTimeout(() => {
-    liveReloadServer.refresh("/");
+    liveReloadServer.refresh("product/index");
   }, 100);
 });
 

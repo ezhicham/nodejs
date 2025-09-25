@@ -7,10 +7,10 @@ const Myproduct = require("../models/productSchema");
 // import functions ========
 const productconteller=require("../controller/productcontroller")
 
-
+const checkAuthUser=require("../middleware/checkauthuser")
 
 // render the  add product page========
-router.get("/product/add.html",productconteller.product_add_get);
+router.get("/product/add.html",checkAuthUser ,productconteller.product_add_get);
 
 
 
